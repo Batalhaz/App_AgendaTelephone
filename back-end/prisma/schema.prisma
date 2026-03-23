@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  photoUrl   String?
+  isFavorite Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  phones     Phone[] // Um contato pode ter vários números
+  calls      Call[] // Histórico de ligações
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+}
+
+model Phone { 
+  id        Int     @id @default(autoincrement())
+  number    String  @unique
+  label     String  @db.VarChar(150) // Ex: "Celular", "Trabalho", "Casa"
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId Int
+}
+
+model Call {
+  id        Int      @id @default(autoincrement())
+  startTime DateTime @default(now())
+  duration  Int 
+  isLost   Boolean  @default(false)
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId Int
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  label    String    @unique // Ex: "Família", "Trabalho", "Amigos"
+  contacts Contact[]
+}

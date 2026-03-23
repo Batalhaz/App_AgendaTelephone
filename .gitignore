@@ -1,0 +1,11 @@
+back-end/node_modules/
+back-end/dist/
+back-end/.env
+back-end/package-lock.json
+
+front-end/flutter_application_1/.dart_tool/
+front-end/flutter_application_1/build/
+front-end/flutter_application_1/.flutter-plugins
+front-end/flutter_application_1/.flutter-plugins-dependencies
+front-end/flutter_application_1/.metadata
+front-end/flutter_application_1/*.iml
